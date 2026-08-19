@@ -12,15 +12,26 @@ descricoes = [
 
 tipos = ["C", "D"]
 
-descricao = random.choice(descricoes)
-tipo = random.choice(tipos)
-valor = random.uniform(10, 500)
-data = datetime.now()
-
-with open("transacoes.csv", "w", newline="") as arquivo:
+with open("transacoes.csv", "w", newline="", encoding="utf-8") as arquivo:
 
     escritor = csv.writer(arquivo)
 
     escritor.writerow(["Data", "Descricao", "Tipo", "Valor"])
 
-    escritor.writerow([data, descricao, tipo, valor])
+    data_inicial = datetime.now()
+
+    for i in range(10):
+
+        data = data_inicial + timedelta(days=i)
+        descricao = random.choice(descricoes)
+        tipo = random.choice(tipos)
+        valor = round(random.uniform(10, 500), 2)
+
+        escritor.writerow([
+            data.strftime("%d/%m/%Y"),
+            descricao,
+            tipo,
+            valor
+        ])
+
+print("10 transações foram geradas com sucesso!")
